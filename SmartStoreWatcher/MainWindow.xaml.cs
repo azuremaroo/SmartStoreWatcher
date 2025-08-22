@@ -1,16 +1,14 @@
-using Microsoft.Toolkit.Uwp.Notifications;
-using HtmlAgilityPack;
-using Microsoft.Web.WebView2.Core;
-using Microsoft.Web.WebView2.Wpf;
-using SmartStoreWatcher.Utils;
 using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Threading;
-using System.ComponentModel;
-using Windows.UI.Notifications;
+using HtmlAgilityPack;
+using Microsoft.Toolkit.Uwp.Notifications;
+using Microsoft.Web.WebView2.Core;
+using Microsoft.Web.WebView2.Wpf;
+using SmartStoreWatcher.Utils;
 
 namespace SmartStoreWatcher
 {
@@ -353,13 +351,8 @@ namespace SmartStoreWatcher
             new ToastContentBuilder()
                 .AddText($"[{w.Display}] 새 상품")
                 .AddText(p.Title)
-                .AddArgument("store", w.Url)                  // ★ 본문 탭 시 스토어로
-                .AddButton(new ToastButton()
-                    .SetContent("스토어 열기")
-                    .AddArgument("store", w.Url))             // 버튼: 스토어
-                .AddButton(new ToastButton()
-                    .SetContent("상품 열기")
-                    .AddArgument("url", p.Url))               // 버튼: 상품
+                // 토스트 본문 클릭 시 스토어 열기
+                .AddToastActivationInfo(w.Url, ToastActivationType.Protocol)
                 .Show();
         }
 
