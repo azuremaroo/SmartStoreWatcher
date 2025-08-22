@@ -1,0 +1,44 @@
+<Window x:Class="SmartStoreWatcher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        Title="스마트 스토어 알림" Height="600" Width="820" WindowStartupLocation="CenterScreen">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical" Margin="0,0,0,8">
+            <TextBlock Text="스마트 스토어 목록(한 줄에 '이름 | URL' 형식, 이름 생략 가능)" Margin="0,0,0,4"/>
+            <TextBox x:Name="UrlsBox"
+                     AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Auto"
+                     Height="120"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBlock Text="폴링 주기(분):" VerticalAlignment="Center" Width="140"/>
+            <TextBox x:Name="IntervalBox" Width="80" Height="30" Text="3"/>
+            <CheckBox x:Name="UseWebViewCheck" Content="렌더링 모드(WebView2)" Margin="20,0,0,0" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,8">
+            <Button x:Name="StartBtn" Content="시작" Width="100" Height="32" Click="StartBtn_Click" />
+            <Button x:Name="StopBtn" Content="중지" Width="100" Height="32" Margin="8,0,0,0" Click="StopBtn_Click" IsEnabled="False"/>
+            <TextBlock x:Name="StatusText" Margin="16,0,0,0" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <Border Grid.Row="3" BorderBrush="#DDD" BorderThickness="1" CornerRadius="6">
+            <DockPanel>
+                <TextBlock Text="로그" FontWeight="Bold" DockPanel.Dock="Top" Margin="8"/>
+                <ListBox x:Name="LogList" Margin="8"/>
+            </DockPanel>
+        </Border>
+
+        <!-- Hidden WebView2 for JS-rendered pages -->
+        <wv2:WebView2 x:Name="HiddenWebView" Width="0" Height="0" Visibility="Collapsed"/>
+    </Grid>
+</Window>
